@@ -9,10 +9,7 @@ import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.impl.DefaultCamelContext;
 
-/**
- * Hello world!
- *
- */
+
 public class DistributeOrderDSL {
     public static void main(String[] args) throws Exception {
        CamelContext context = new DefaultCamelContext();
@@ -22,15 +19,15 @@ public class DistributeOrderDSL {
              public void configure() throws Exception {
                 from("direct:DistributeOrderDSL")
                    .split(xpath("//order[@product='soaps']/items"))
-                  // .to("stream:out");
-                   .to("file:src/main/resources/order/");
+                   .to("stream:out");
+                  // .to("file:src/main/resources/order/");
              }
           });
           context.start();
           ProducerTemplate orderProducerTemplate = context.createProducerTemplate();
           
           // InputStream orderInputStream = new FileInputStream(ClassLoader.getSystemClassLoader().getResource("order.xml").getFile());
-          File file = new File("C:\\dev\\basket\\Basket\\order.xml");
+          File file = new File("order.xml");
 
           InputStream orderInputStream = new FileInputStream(file);
 
